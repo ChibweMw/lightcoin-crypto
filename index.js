@@ -8,26 +8,30 @@ class Account {
   }
 }
 
-class Deposit {
+class Transaction {
+
   constructor(amount, account) {
     this.amount = amount;
     this.account = account;
   }
 
   commit() {
-    this.account.balance += this.amount;
+    this.account.balance += this.value;
   }
 }
 
-class Withdrawal {
+class Deposit extends Transaction {
 
-  constructor(amount, account) {
-    this.amount = amount;
-    this.account = account;
+  get value() {
+    return this.amount;
   }
 
-  commit() {
-    this.account.balance -= this.amount;
+}
+
+class Withdrawal extends Transaction {
+
+  get value() {
+    return -this.amount;
   }
 
 }
@@ -39,6 +43,8 @@ class Withdrawal {
 // We use the code below to "drive" the application logic above and make sure it's working as expected
 
 const myAccount = new Account("snow-patrol");
+
+console.log('////////////////\nCurrent balance:', myAccount.balance,"\n////////////////");
 
 t1 = new Deposit(120.00, myAccount);
 t1.commit();
@@ -52,4 +58,4 @@ t3 = new Withdrawal(9.99, myAccount);
 t3.commit();
 console.log('Transaction 3:', t3);
 
-console.log('Current balance:', myAccount.balance);
+console.log('////////////////\nCurrent balance:', myAccount.balance,"\n////////////////");
